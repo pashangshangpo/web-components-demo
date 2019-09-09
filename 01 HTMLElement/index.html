@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01 HTMLElement</title>
+</head>
+<body>
+    <script>
+        const getProtoTypes = (el) => {
+            if (el === null) {
+                return
+            }
+
+            return (el.__proto__ ? [el.__proto__] : [])
+                .concat(getProtoTypes(el.__proto__))
+                .filter(Boolean)
+        }
+
+        const tags = ['div', 'span', 'svg', 'button', 'img', 'h1', 'input', 'canvas', 'form', 'test', 'x-component']
+
+        for (let tag of tags) {
+            console.log(tag, getProtoTypes(document.createElement(tag)))
+        }
+    </script>
+</body>
+</html>
