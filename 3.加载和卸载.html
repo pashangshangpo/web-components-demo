@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>加载和卸载</title>
+</head>
+<body>
+	<x-messsage text="hello world"></x-messsage>
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+      // 改变 text 会触发 attributeChangedCallback
+      static get observedAttributes() {
+        return ['text']
+      }
+      
+      // 插入到 dom 后
+			connectedCallback() {
+				this.addEventListener('click', this.handleClick)
+			}
+      
+      // 属性更改
+      attributeChangedCallback() {
+        this.render()
+      }
+      
+      // 卸载
+      disconnectedCallback() {
+        this.removeEventListener('click', this.handleClick)
+      }
+
+      handleClick(e) {
+        if (e.target.id === "btn") {
+          this.remove()
+          return
+        }
+
+        if (this.getAttribute('text') === 'hello world') {
+          this.setAttribute('text', '欢迎你！')
+        } else {
+          this.setAttribute('text', 'hello world')
+        }
+      }
+
+      render() {
+        this.innerHTML = (
+          `
+            <div style="color:red;">${this.getAttribute('text')}</div>
+            <button id="btn">卸载组件</button>
+          `
+        )
+      }
+		})
+	</script>
+</body>
+</html>

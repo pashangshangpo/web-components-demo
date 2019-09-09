@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>10.slot name使用</title>
+</head>
+<body>
+  <x-tabs>
+    <button slot="title">tab1</button>
+    <button slot="title">tab2</button>
+    <button slot="title">tab3</button>
+    <div slot="content">content1</div>
+    <div slot="content" class="active">content2</div>
+    <div slot="content">content3</div>
+  </x-tabs>
+  
+	<script type="text/javascript">
+		customElements.define('x-tabs', class extends HTMLElement {
+      connectedCallback() {
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        })
+
+        shadowRoot.innerHTML = `
+          <div>
+            <slot name="title"></slot>
+          </div>
+          <div>
+            <slot class="content" name="content"></slot>
+          </div>
+          <style>
+            .content::slotted(:not(.active)) {
+              display: none;
+            }
+          </style>
+        `
+      }
+		})
+	</script>
+</body>
+</html>

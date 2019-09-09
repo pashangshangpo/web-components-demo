@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>define-components</title>
+</head>
+<body>
+	<x-messsage text="hello world"></x-messsage>
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+			constructor() {
+				super()
+
+				this.innerHTML = this.getAttribute('text')
+
+				this.addEventListener('click', () => {
+					if (this.getAttribute('text') === 'hello world') {
+						this.setAttribute('text', '欢迎你！')
+					} else {
+						this.setAttribute('text', 'hello world')
+					}
+				})
+			}
+		})
+	</script>
+</body>
+</html>

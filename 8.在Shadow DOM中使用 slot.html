@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>8.在Shadow DOM中使用 slot</title>
+</head>
+<body>
+	<x-messsage id="message">
+    今天是个好天气！
+  </x-messsage>
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+      connectedCallback() {
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        })
+
+        shadowRoot.innerHTML = '<slot></slot>'
+
+        this.style.color = 'pink'
+      }
+		})
+
+    document.querySelector('#message').addEventListener('click', function() {
+      this.innerHTML = '今天是个雾霾天！'
+    })
+	</script>
+</body>
+</html>

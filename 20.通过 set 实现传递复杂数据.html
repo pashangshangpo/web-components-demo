@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>20.通过 set 实现传递复杂数据</title>
+</head>
+<body>
+  <x-list></x-list>
+  <script>
+    customElements.define('x-list', class extends HTMLElement {
+      constructor() {
+        super()
+
+        this.innerHTML = `
+          <ul id="list"></ul>
+        `
+      }
+
+      set list(data) {
+        this._list = data
+
+        this.querySelector('#list').innerHTML = data.map(item => (`
+          <li>${item}</li>
+        `)).join('')
+      }
+
+      get list() {
+        return this._list
+      }
+
+      set handleClick(fn) {
+        this.addEventListener('click', fn.bind(this))
+      }
+    })  
+  </script>
+  <script>
+    const xList = document.querySelector('x-list')
+
+    xList.list = [
+      'CSS',
+      'Html',
+      'Javascript'
+    ]
+
+    xList.handleClick = () => {
+      console.log('click')
+    }
+  </script>
+</body>
+</html>

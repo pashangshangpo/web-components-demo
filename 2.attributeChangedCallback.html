@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>attributeChangedCallback</title>
+</head>
+<body>
+	<x-messsage text="hello world"></x-messsage>
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+      // 改变 text 会触发 attributeChangedCallback
+      static get observedAttributes() {
+        return ['text']
+      }
+
+			constructor() {
+				super()
+
+				this.addEventListener('click', () => {
+					if (this.getAttribute('text') === 'hello world') {
+						this.setAttribute('text', '欢迎你！')
+					} else {
+						this.setAttribute('text', 'hello world')
+					}
+				})
+			}
+
+      attributeChangedCallback(name, oldVal, newVal) {
+        if (name === 'text') {
+          this.render()
+        }
+      }
+
+      render() {
+        this.innerHTML = (
+          `
+            <div style="color:red;">${this.getAttribute('text')}</div>
+          `
+        )
+      }
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>组件外部更改 props</title>
+</head>
+<body>
+	<x-messsage id="message" text="hello world"></x-messsage>
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+      // 改变 text 会触发 attributeChangedCallback
+      static get observedAttributes() {
+        return ['text']
+      }
+
+      attributeChangedCallback() {
+        this.render()
+      }
+
+      render() {
+        this.innerHTML = (
+          `
+            <div style="color:red;">${this.getAttribute('text')}</div>
+          `
+        )
+      }
+		})
+
+    document.querySelector('#message').addEventListener('click', function() {
+      this.setAttribute('text', '你好啊！')
+    })
+	</script>
+</body>
+</html>

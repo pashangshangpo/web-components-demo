@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>9.使用template</title>
+</head>
+<body>
+  <template id="x-messsage">
+    <style>
+      h2 {
+        color: red;
+      }
+    </style>
+    <h2>世界你好！</h2>
+  </template>
+  <x-messsage></x-messsage>
+  
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+      connectedCallback() {
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        })
+
+        shadowRoot.appendChild(document.querySelector('#x-messsage').content.cloneNode(true))
+      }
+		})
+	</script>
+</body>
+</html>

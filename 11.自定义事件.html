@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>11.自定义事件</title>
+</head>
+<body>
+	<x-messsage id="message"></x-messsage>
+	<script type="text/javascript">
+		customElements.define('x-messsage', class extends HTMLElement {
+      constructor() {
+        super()
+
+        this.innerHTML = '自定义事件'
+
+        this.addEventListener('click', () => {
+          this.dispatchEvent(new CustomEvent('x-click', {
+            detail: {
+              message: '我是自定义事件'
+            },
+          }))
+        })
+      }
+		})
+
+    document.querySelector('#message').addEventListener('x-click', function({ detail }) {
+      console.log(detail.message)
+    })
+	</script>
+</body>
+</html>
